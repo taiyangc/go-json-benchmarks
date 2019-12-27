@@ -1,72 +1,49 @@
-* jsonparser: https://github.com/buger/jsonparser
-* jsoniter pull-api: https://github.com/json-iterator/go
-* jsoniter reflect-api: https://github.com/json-iterator/go/blob/master/jsoniter_reflect.go
-* encoding/json: golang standard lib
-* easy json: https://github.com/mailru/easyjson
+# Go Benchmarks for JSON encoding/decoding libraries
 
-The goal is to prove jsoniter is not slow, not to prove it is the fastest, at least good enough.
-My motivation of inventing json iterator is the flexibility to mix high level and low level api.
-Performance is the by-product of schema based parsing.
+Because the standard Golang library sometimes isn't enough...
 
-* CPU: i7-6700K @ 4.0G
-* Level 1 cache size: 4 x 32 KB 8-way set associative instruction caches
-* Level 2 cache size: 4 x 256 KB 4-way set associative caches
-* Level 3 cache size: 8 MB 16-way set associative shared cache
-* Go: 1.8beta1
+These benchmarks are aimed at providing the latest (Dec 2019) results of various popular drop-in replacements for the Golang encoding/json library.
 
-# small payload
+* encoding/json: Golang standard library
+* segmentio/json: https://github.com/segmentio/encoding/tree/master/json
+* jsoniter: https://github.com/json-iterator/go
+* easyjson: https://github.com/mailru/easyjson
 
-https://github.com/json-iterator/go-benchmark/blob/master/src/github.com/json-iterator/go-benchmark/benchmark_small_payload_test.go
+Originally based on jsoniter's [go-benchmark](https://github.com/json-iterator/go-benchmark), these have been go-modules-modernized and improved.
 
-| jsonparser  | jsoniter pull-api | jsoniter reflect-api | encoding/json | easyjson    |
-| ---         | ---               | ---                  | ---           | ---         |
-| 599 ns/op   | 515 ns/op         | 684 ns/op            | 2453 ns/op    | 687 ns/op   |
-| 64 B/op     | 64 B/op           | 256 B/op             | 864 B/op      | 64 B/op     |
-| 2 allocs/op | 2 allocs/op       | 4 allocs/op          | 31 allocs/op  | 2 allocs/op |
+Suggestions and contributions are welcome!
 
-pull-api is fast, and reflection-api is not slow either.
-encoding/json is not that slow on i7-6700K, but much slower on cpu with smaller cache.
+# Benchmark Results
 
-![small](/small.png)
+go version go1.13.5 darwin/amd64
 
-# medium payload
+MacBook Pro (15-inch, 2018)
 
-https://github.com/json-iterator/go-benchmark/blob/master/src/github.com/json-iterator/go-benchmark/benchmark_medium_payload_test.go
+2.6 GHz 6-Core Intel Core i7
 
-| jsonparser  | jsoniter pull-api | jsoniter reflect-api | encoding/json | easyjson    |
-| ---         | ---               | ---                  | ---           | ---         |
-| 5238 ns/op  | 4111 ns/op        | 4708 ns/op           | 24939 ns/op   | 7361 ns/op  |
-| 104 B/op    | 104 B/op          | 368 B/op             | 808 B/op      | 248 B/op    |
-| 4 allocs/op | 4 allocs/op       | 14 allocs/op         | 18 allocs/op  | 8 allocs/op |
+16 GB 2400 MHz DDR4
 
-reflect-api even out-performed the hand written parser
-
-![medium](/medium.png)
-
-# large payload
-
-https://github.com/json-iterator/go-benchmark/blob/master/src/github.com/json-iterator/go-benchmark/benchmark_large_payload_test.go
-
-| jsonparser  | jsoniter pull-api | encoding/json |
-| ---         | ---               | ---           |
-| 38334 ns/op | 38463 ns/op       | 290778 ns/op  |
-| 0 B/op      | 0 B/op            | 2128 B/op     |
-| 0 allocs/op | 0 allocs/op       | 46 allocs/op  |
-
-This is a pure counting usage. jsonparser is faster
-
-![large](/large.png)
-
-# large file
-
-test file used: https://github.com/json-iterator/test-data/blob/master/large-file.json
-
-| jsonparser     | jsoniter pull-api | encoding/json    |
-| ---            | ---               | ---              |
-| 42698634 ns/op | 37760014 ns/op    | 235354502 ns/op  |
-| 67107104 B/op  | 4248 B/op         | 71467896 B/op    |
-| 19 allocs/op   | 5 allocs/op       | 272477 allocs/op |
-
-The difference here is because jsonparser take []byte as input, but jsoniter can take io.Reader as input.
-
-![large-file](/large-file.png)
+benchmark                                       | iter  | time/iter         | bytes/op       | allocs/op           
+------------------------------------------------|-------|-------------------|----------------|--------------------
+BenchmarkDecodeStdStructSmall-12                | 469744|         2334 ns/op|        272 B/op|         6 allocs/op
+BenchmarkEncodeStdStructSmall-12                |2625330|          493 ns/op|        192 B/op|         2 allocs/op
+BenchmarkDecodeSegmentioJsonStructSmall-12      |1284361|          889 ns/op|         64 B/op|         2 allocs/op
+BenchmarkEncodeSegmentioJsonStructSmall-12      |3632870|          375 ns/op|        192 B/op|         2 allocs/op
+BenchmarkDecodeJsoniterStructSmall-12           |1963063|          595 ns/op|         64 B/op|         2 allocs/op
+BenchmarkEncodeJsoniterStructSmall-12           |2650510|          516 ns/op|        192 B/op|         2 allocs/op
+BenchmarkDecodeEasyJsonSmall-12                 |1741574|          680 ns/op|         64 B/op|         2 allocs/op
+BenchmarkEncodeEasyJsonSmall-12                 |4292940|          278 ns/op|        128 B/op|         1 allocs/op
+BenchmarkDecodeStdStructMedium-12               |  63357|        19156 ns/op|        496 B/op|        11 allocs/op
+BenchmarkEncodeStdStructMedium-12               |1625660|          749 ns/op|        224 B/op|         2 allocs/op
+BenchmarkDecodeSegmentioJsonStructMedium-12     | 215605|         5494 ns/op|         80 B/op|         2 allocs/op
+BenchmarkEncodeSegmentioJsonStructMedium-12     |2399955|          492 ns/op|        224 B/op|         2 allocs/op
+BenchmarkDecodeJsoniterStructMedium-12          | 208089|         5739 ns/op|        384 B/op|        41 allocs/op
+BenchmarkEncodeJsoniterStructMedium-12          |1600407|          757 ns/op|        224 B/op|         2 allocs/op
+BenchmarkDecodeEasyJsonMedium-12                | 163221|         7059 ns/op|        160 B/op|         4 allocs/op
+BenchmarkEncodeEasyJsonMedium-12                |2135684|          568 ns/op|        576 B/op|         3 allocs/op
+BenchmarkDecodeStdStructLarge-12                |   5624|       213245 ns/op|        344 B/op|         7 allocs/op
+BenchmarkEncodeStdStructLarge-12                |1372980|          853 ns/op|        160 B/op|         2 allocs/op
+BenchmarkDecodeSegmentioJsonStructLarge-12      |  13791|        83988 ns/op|          0 B/op|         0 allocs/op
+BenchmarkEncodeSegmentioJsonStructLarge-12      |2916681|          415 ns/op|        160 B/op|         2 allocs/op
+BenchmarkDecodeJsoniterStructLarge-12           |  13924|        86726 ns/op|      12885 B/op|      1124 allocs/op
+BenchmarkEncodeJsoniterStructLarge-12           |2094675|          581 ns/op|        160 B/op|         2 allocs/op

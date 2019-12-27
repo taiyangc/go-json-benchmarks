@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/taiyangc/go-benchmark/testobject"
+	"github.com/taiyangc/go-json-benchmarks/testobject"
 
 	"git.apache.org/thrift.git/lib/go/thrift"
 	"github.com/golang/protobuf/proto"

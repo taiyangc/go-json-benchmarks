@@ -1,4 +1,4 @@
-module github.com/taiyangc/go-benchmark
+module github.com/taiyangc/go-json-benchmarks
 
 go 1.13
 

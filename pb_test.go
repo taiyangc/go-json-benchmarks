@@ -28,7 +28,7 @@ func Benchmark_jsoniter2(b *testing.B) {
 	data, _ := jsoniter.Marshal(&obj)
 	//buf := &bytes.Buffer{}
 	//stream := jsoniter.NewStream(buf, 4096)
-	iter := jsoniter.NewIterator()
+	iter := jsoniter.NewIterator(jsoniter.ConfigFastest)
 	for i := 0; i < b.N; i++ {
 		iter.ResetBytes(data)
 		iter.ReadVal(&obj)

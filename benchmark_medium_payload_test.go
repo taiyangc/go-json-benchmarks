@@ -3,10 +3,11 @@ package go_benchmark
 import (
 	"bytes"
 	"encoding/json"
+	"testing"
+
 	"github.com/json-iterator/go"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"
-	"testing"
 )
 
 /*

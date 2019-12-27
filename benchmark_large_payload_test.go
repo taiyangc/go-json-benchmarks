@@ -2,9 +2,10 @@ package go_benchmark
 
 import (
 	"encoding/json"
+	"testing"
+
 	"github.com/buger/jsonparser"
 	"github.com/json-iterator/go"
-	"testing"
 )
 
 func BenchmarkJsonParserLarge(b *testing.B) {
@@ -18,7 +19,7 @@ func BenchmarkJsonParserLarge(b *testing.B) {
 }
 
 func BenchmarkJsoniterLarge(b *testing.B) {
-	iter := jsoniter.ParseBytes(largeFixture)
+	iter := jsoniter.ParseBytes(jsoniter.ConfigFastest, largeFixture)
 	b.ReportAllocs()
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {

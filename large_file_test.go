@@ -25,7 +25,7 @@ func Test_jsonparser_skip(t *testing.T) {
 func Test_jsoniter_skip(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		file, _ := os.Open("/tmp/large-file.json")
-		iter := jsoniter.Parse(file, 4096)
+		iter := jsoniter.Parse(jsoniter.ConfigFastest, file, 4096)
 		total := 0
 		for iter.ReadArray() {
 			iter.Skip()
@@ -66,7 +66,7 @@ func Benchmark_jsoniter(b *testing.B) {
 	b.ReportAllocs()
 	for n := 0; n < b.N; n++ {
 		file, _ := os.Open("/tmp/large-file.json")
-		iter := jsoniter.Parse(file, 4096)
+		iter := jsoniter.Parse(jsoniter.ConfigFastest, file, 4096)
 		for iter.ReadArray() {
 			iter.Skip()
 		}

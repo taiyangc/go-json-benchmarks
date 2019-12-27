@@ -9,4 +9,5 @@ require (
 	github.com/golang/protobuf v1.3.2
 	github.com/json-iterator/go v1.1.9
 	github.com/mailru/easyjson v0.7.0
+	github.com/segmentio/encoding v0.1.8
 )

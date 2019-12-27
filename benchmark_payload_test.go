@@ -8,6 +8,7 @@ import (
 	"github.com/json-iterator/go"
 	"github.com/mailru/easyjson/jlexer"
 	"github.com/mailru/easyjson/jwriter"
+	siojson "github.com/segmentio/encoding/json"
 )
 
 // encoding/json
@@ -25,6 +26,24 @@ func BenchmarkEncodeStdStructSmall(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		json.Marshal(data)
+	}
+}
+
+// segmentio/encoding/json
+func BenchmarkDecodeSegmentioJsonStructSmall(b *testing.B) {
+	b.ReportAllocs()
+	var data SmallPayload
+	for i := 0; i < b.N; i++ {
+		siojson.Unmarshal(smallFixture, &data)
+	}
+}
+
+func BenchmarkEncodeSegmentioJsonStructSmall(b *testing.B) {
+	var data SmallPayload
+	json.Unmarshal(smallFixture, &data)
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		siojson.Marshal(data)
 	}
 }
 
@@ -88,6 +107,24 @@ func BenchmarkEncodeStdStructMedium(b *testing.B) {
 	}
 }
 
+// segmentio/encoding/json
+func BenchmarkDecodeSegmentioJsonStructMedium(b *testing.B) {
+	b.ReportAllocs()
+	var data MediumPayload
+	for i := 0; i < b.N; i++ {
+		siojson.Unmarshal(mediumFixture, &data)
+	}
+}
+
+func BenchmarkEncodeSegmentioJsonStructMedium(b *testing.B) {
+	var data MediumPayload
+	json.Unmarshal(mediumFixture, &data)
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		siojson.Marshal(data)
+	}
+}
+
 // json-iterator
 func BenchmarkDecodeJsoniterStructMedium(b *testing.B) {
 	b.ReportAllocs()
@@ -145,6 +182,24 @@ func BenchmarkEncodeStdStructLarge(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
 		json.Marshal(data)
+	}
+}
+
+// segmentio/encoding/json
+func BenchmarkDecodeSegmentioJsonStructLarge(b *testing.B) {
+	b.ReportAllocs()
+	var data LargePayload
+	for i := 0; i < b.N; i++ {
+		siojson.Unmarshal(largeFixture, &data)
+	}
+}
+
+func BenchmarkEncodeSegmentioJsonStructLarge(b *testing.B) {
+	var data LargePayload
+	json.Unmarshal(largeFixture, &data)
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		siojson.Marshal(data)
 	}
 }
 

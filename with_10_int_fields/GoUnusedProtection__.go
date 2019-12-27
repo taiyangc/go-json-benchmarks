@@ -3,5 +3,4 @@
 
 package with_10_int_fields
 
-var GoUnusedProtection__ int;
-
+var GoUnusedProtection__ int

@@ -1,10 +1,10 @@
 package go_benchmark
 
 import (
-	"testing"
+	"encoding/json"
 	"github.com/buger/jsonparser"
 	"github.com/json-iterator/go"
-	"encoding/json"
+	"testing"
 )
 
 func BenchmarkJsonParserLarge(b *testing.B) {

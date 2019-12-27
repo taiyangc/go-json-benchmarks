@@ -16,15 +16,15 @@ var smallFixture []byte = []byte(`{
 }`)
 
 type SmallPayload struct {
-	St   int `json:"st"`
-	Sid  int `json:"-"`
+	St   int    `json:"st"`
+	Sid  int    `json:"-"`
 	Tt   string `json:"-"`
-	Gr   int `json:"-"`
+	Gr   int    `json:"-"`
 	Uuid string `json:"uuid"`
 	Ip   string `json:"-"`
 	Ua   string `json:"ua"`
-	Tz   int `json:"tz"`
-	V    int `json:"-"`
+	Tz   int    `json:"tz"`
+	V    int    `json:"-"`
 }
 
 // Reponse from Clearbit API. Size: 2.4kb
@@ -139,14 +139,14 @@ type CBName struct {
 }
 
 type CBPerson struct {
-	Name     *CBName `json:"name"`
-	Github   *CBGithub `json:"github"`
+	Name     *CBName     `json:"name"`
+	Github   *CBGithub   `json:"github"`
 	Gravatar *CBGravatar `json:"gravatar"`
 }
 
 type MediumPayload struct {
 	Person  *CBPerson `json:"person"`
-	Company string `json:"compnay"`
+	Company string    `json:"company"`
 }
 
 /*
@@ -161,16 +161,16 @@ type DSUser struct {
 }
 
 type DSTopic struct {
-	Id   int `json:"-"`
+	Id   int    `json:"-"`
 	Slug string `json:"-"`
 }
 
 type DSTopicsList struct {
 	Topics        []struct{} `json:"topics"`
-	MoreTopicsUrl string `json:"-"`
+	MoreTopicsUrl string     `json:"-"`
 }
 
 type LargePayload struct {
-	Users  []*DSUser `json:"-"`
+	Users  []*DSUser     `json:"-"`
 	Topics *DSTopicsList `json:"topics"`
 }

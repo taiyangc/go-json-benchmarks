@@ -1,10 +1,10 @@
 package with_10_string_fields
 
 import (
-	"testing"
-	"github.com/mailru/easyjson/jwriter"
 	"bytes"
 	"github.com/json-iterator/go"
+	"github.com/mailru/easyjson/jwriter"
+	"testing"
 )
 
 func Benchmark_easyjson(b *testing.B) {

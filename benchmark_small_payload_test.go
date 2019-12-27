@@ -1,11 +1,11 @@
 package go_benchmark
 
 import (
-	"testing"
+	"encoding/json"
 	"github.com/buger/jsonparser"
 	"github.com/json-iterator/go"
-	"encoding/json"
 	"github.com/mailru/easyjson/jlexer"
+	"testing"
 )
 
 func BenchmarkJsonParserSmall(b *testing.B) {

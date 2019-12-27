@@ -1,12 +1,12 @@
 package go_benchmark
 
 import (
-	"testing"
-	"github.com/json-iterator/go"
-	"os"
 	"encoding/json"
 	"github.com/buger/jsonparser"
+	"github.com/json-iterator/go"
 	"io/ioutil"
+	"os"
+	"testing"
 )
 
 func Test_jsonparser_skip(t *testing.T) {

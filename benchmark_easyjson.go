@@ -142,7 +142,7 @@ func easyjsonA6c3493fDecodeGithubComJsonIteratorGoBenchmark4(in *jlexer.Lexer, o
 				}
 				(*out.Person).UnmarshalEasyJSON(in)
 			}
-		case "compnay":
+		case "company":
 			out.Company = string(in.String())
 		default:
 			in.SkipRecursive()
@@ -172,7 +172,7 @@ func easyjsonA6c3493fEncodeGithubComJsonIteratorGoBenchmark4(out *jwriter.Writer
 		out.RawByte(',')
 	}
 	first = false
-	out.RawString("\"compnay\":")
+	out.RawString("\"company\":")
 	out.String(string(in.Company))
 	out.RawByte('}')
 }

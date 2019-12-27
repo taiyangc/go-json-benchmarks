@@ -1,13 +1,13 @@
 package with_10_int_fields
 
 import (
-	"testing"
+	"bytes"
+	"encoding/json"
+	"git.apache.org/thrift.git/lib/go/thrift"
 	"github.com/golang/protobuf/proto"
 	"github.com/json-iterator/go"
-	"encoding/json"
-	"bytes"
-	"git.apache.org/thrift.git/lib/go/thrift"
 	"github.com/mailru/easyjson/jwriter"
+	"testing"
 )
 
 func Benchmark_protobuf_read(b *testing.B) {
@@ -97,7 +97,6 @@ func Benchmark_thrift(b *testing.B) {
 		}
 	})
 }
-
 
 func Benchmark_easyjson(b *testing.B) {
 	obj := PbTestObject{31415926, 61415923, 31415269, 53141926, 13145926, 43115926, 31419265, 23141596, 43161592, 112}
